@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:sms-system-api="http://www.mulesoft.org/schema/mule/sms-system-api" xmlns:e-mail-system-api="http://www.mulesoft.org/schema/mule/e-mail-system-api"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/e-mail-system-api http://www.mulesoft.org/schema/mule/e-mail-system-api/current/mule-e-mail-system-api.xsd
+http://www.mulesoft.org/schema/mule/sms-system-api http://www.mulesoft.org/schema/mule/sms-system-api/current/mule-sms-system-api.xsd">
+	<sms-system-api:config name="SMS_System_API_Config" doc:name="SMS System API Config" doc:id="cf251253-ab5b-4c9b-93eb-fdc8dc56b5fc" property_host="${sms-sapi.host}" property_port="443" property_basePath="/${sms-sapi.base-path}" property_protocol="HTTPS"/>
+	<flow name="smsFlow" doc:id="4a340ab2-4977-460b-aa43-753f16684592" >
+		<logger level="INFO" doc:name="Logger" doc:id="41b3d56e-2631-496f-9232-de0372d649c0" />
+		<http:request method="POST" doc:name="Request" doc:id="5fc27ebe-fc24-4ce7-ac7a-a48e24845d7e" path="/${sms-sapi.request_path}" config-ref="HTTP_Request_sms-sapi">
+			<http:body ><![CDATA[#[%dw 2.0
+output application/json
+---
+payload]]]></http:body>
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"client_secret" : p('sms-sapi.client_secret'),
+	"client_id" : p('sms-sapi.client_id')
+}]]]></http:headers>
+		</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="bb0dfa70-6ef6-4ee4-bbea-5d7197d5ab6b" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
