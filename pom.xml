@@ -2,9 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.mycompany</groupId>
+	<groupId>2fdf0f92-7894-4d64-934e-2c509ced85d5</groupId>
 	<artifactId>notification-papi</artifactId>
-	<version>1.0.2</version>
+	<version>1.1.0</version>
 	<packaging>mule-application</packaging>
 
 	<name>notification-papi</name>
@@ -31,6 +31,45 @@
 				<extensions>true</extensions>
 				<configuration>
 					<classifier>---- select project type ----</classifier>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.mule.tools.maven</groupId>
+				<artifactId>mule-maven-plugin</artifactId>
+				<version>${mule.maven.plugin.version}</version>
+				<extensions>true</extensions>
+				<configuration>
+					<cloudhub2Deployment>
+						<uri>https://anypoint.mulesoft.com</uri>
+						<provider>MC</provider>
+						<businessGroup>MuleTuorial</businessGroup>
+						<environment>${environment}</environment>
+						<target>${target}</target>
+						<server>${server}</server>
+						<muleVersion>${muleVersion}</muleVersion>
+						<applicationName>${applicationName}</applicationName>
+						<replicas>1</replicas>
+						<vCores>0.1</vCores>
+						<deploymentTimeout>2000000</deploymentTimeout>
+						<properties>
+							<env>${env}</env>
+							<anypoint.platform.client_id>${anypoint.platform.client_id}</anypoint.platform.client_id>
+							<anypoint.platform.client_secret>${anypoint.platform.client_secret}</anypoint.platform.client_secret>
+							<anypoint.platform.gatekeeper>disabled</anypoint.platform.gatekeeper>
+						</properties>
+						<secureProperties>
+							<config.key>${config.key}</config.key>
+						</secureProperties>
+						<deploymentSettings>
+							<http>
+								<inbound>
+									<publicUrl>${publicURL}</publicUrl>
+									<forwardSslSession>false</forwardSslSession>
+									<lastMileSecurity>false</lastMileSecurity>
+								</inbound>
+							</http>
+						</deploymentSettings>
+					</cloudhub2Deployment>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -119,5 +158,12 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
-
+	<distributionManagement>
+		<repository>
+			<id>non-production-automated-deployment</id>
+			<name>Corporate Repository</name>
+			<url>https://maven.anypoint.mulesoft.com/api/v3/organizations/2fdf0f92-7894-4d64-934e-2c509ced85d5/maven</url>
+			<layout>default</layout>
+		</repository>
+	</distributionManagement>
 </project>
