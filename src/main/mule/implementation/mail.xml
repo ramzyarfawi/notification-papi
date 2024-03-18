@@ -11,8 +11,8 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 			<http:headers ><![CDATA[#[output application/java
 ---
 {
-	"client_secret" : p('notification-papi.client_secret'),
-	"client_id" : p('notification-papi.client_id')
+	"client_secret" : p('email-sapi.client_secret'),
+	"client_id" : p('email-sapi.client_id')
 }]]]></http:headers>
 		</http:request>
 		<ee:transform doc:name="Transform Message" doc:id="bb0dfa70-6ef6-4ee4-bbea-5d7197d5ab6b" >
