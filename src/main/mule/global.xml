@@ -12,12 +12,12 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 	<global-property doc:name="Global Property" doc:id="3f72cf3a-92a0-4bf6-b8e3-1590c3d8cda3" name="env" value="local" />
 	<api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="69b6eda3-9f7b-4d70-a8cc-1ec7382d5dd0" flowRef="notification-process-api-main" />
 	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="33ace5bf-6897-4e59-a720-5eaaff128580" >
-		<http:listener-connection host="0.0.0.0" port="8081" />
+		<http:listener-connection host="0.0.0.0" port="${listener.port}" />
 	</http:listener-config>
-	<http:request-config name="HTTP_Request_sms-sapi" doc:name="HTTP Request configuration" doc:id="cf53b840-3bac-4b33-a328-1e7d2f61ed12" basePath="/${sms-sapi.base-path}" >
+	<http:request-config name="HTTP_Request_sms-sapi" doc:name="HTTP Request configuration" doc:id="cf53b840-3bac-4b33-a328-1e7d2f61ed12" basePath="/${sms-sapi.base-path}" responseTimeout="30000">
 		<http:request-connection host="${sms-sapi.host}" protocol="HTTPS"/>
 	</http:request-config>
-	<http:request-config name="HTTP_Request_email-sapi" doc:name="HTTP Request configuration" doc:id="0b742d37-8979-4c38-9f19-1a8b43e0c397" basePath="/${email-sapi.base-path}" >
+	<http:request-config name="HTTP_Request_email-sapi" doc:name="HTTP Request configuration" doc:id="0b742d37-8979-4c38-9f19-1a8b43e0c397" basePath="/${email-sapi.base-path}" responseTimeout="30000">
 		<http:request-connection host="${email-sapi.host}" protocol="HTTPS"/>
 	</http:request-config>
 </mule>
